@@ -19,12 +19,13 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
+// not exactly sure what to do here
 app.get('/api/notes', (req, res) => {
     res.status(200).json(`${req.method} request received to get notes`);
     console.info(`${req.method} request received to get notes`);
 });
 
-// POST request to add a note
+
 app.post('/api/notes', (req, res) => {
     const { title, text } = req.body;
     if (title && text) {
@@ -33,18 +34,13 @@ app.post('/api/notes', (req, res) => {
             text,
         };
 
-        // Obtain existing notes
+
         fs.readFile('db/db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
             } else {
-                // Convert string into JSON object
                 const parsedNotes = JSON.parse(data);
-
-                // Add a new note
                 parsedNotes.push(newNote);
-
-                // Write updated notes back to the file
                 fs.writeFile(
                     'db/db.json',
                     JSON.stringify(parsedNotes, null, 4),
