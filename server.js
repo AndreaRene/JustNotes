@@ -60,6 +60,14 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
+app.delete("/api/notes/:id", function (req, res) {
+    console.log("req params", req.params.id)
+    const itemIndex = myArray.findIndex(({ id }) => id === req.params.id);
+    if (itemIndex >= 0) {
+        myArray.splice(itemIndex, 1);
+    }
+});
+
 app.get('*', (req, res) =>
     res.sendFile(path.join(__dirname, './public/index.html'))
 );
