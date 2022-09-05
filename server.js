@@ -43,13 +43,28 @@ const readAndAppend = (content, file) => {
     });
 };
 
+// function to delete notes
+const deleteNote = (file, id) => {
+    fs.readFile(file, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            let noteArray = [];
+            noteArray.push(data);
+            noteArray = noteArray.filter(note => note.id !== id);
+            // const parsedData = JSON.parse(noteArray);
+            writeToFile(file, noteArray);
+        }
+    });
+};
+
 // GET route to retrieve notes
 app.get('/api/notes', (req, res) => {
     console.info(`${req.method} request received for notes`);
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-// post route for to add new note
+// POST route for to add new note
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received to add a note`);
 
@@ -70,11 +85,9 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete("/api/notes/:id", function (req, res) {
-    console.log("req params", req.params.id)
-    const itemIndex = myArray.findIndex(({ id }) => id === req.params.id);
-    if (itemIndex >= 0) {
-        myArray.splice(itemIndex, 1);
-    }
+    console.info(`${req.method} request received to delete a note`);
+    deleteNote('./db/db.json', req.param.id);
+    res.json(`Note deleted successfully`)
 });
 
 // GET route for homepage
