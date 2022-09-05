@@ -1,0 +1,6 @@
+app.delete('/api/notes/:id', (req, res) => {
+    readFromFile('./db/db.json').then((data) => {
+        filteredData = data.filter(i => data.id !== req.id);
+        writeToFile('./db/db.json', filteredData)
+    });
+});
