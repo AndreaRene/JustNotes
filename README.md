@@ -1,36 +1,32 @@
 # JustNotes
 
-This command line application will allow a user to generate a team profile by answering a series of questions in the terminal. The user will be prompted to enter information about the team manager first. Then the user will have a choice to add an engineer, add an intern, or finish(write the file). After each employee added, the user will then be given the same options.
+This leightweight application allows a user to post, save, and delete notes. 
 
-When the user selects "Finish" the file will be written and saved with a unique name referencing the team manager's name. Because of this, the application can be used to quickly create several unique team profiles.
+Please note, this application is in it's early stage and the backend is very simple so any note you enter will be available to anyone with the link to see and delete. The current version is a work in progress. I'll be working on this feature at a later time.
 
-I have included several sample files created using this generator. You can find them in the [dist](/dist/) folder.
-
-You can find the walkthrough video [here](https://drive.google.com/file/d/19wUKvFf-UM1UpRmvmujzrjusQUalLxqe/view) 
+You can find the deployed app[here](https://just-notes-app.herokuapp.com/) 
   
 This application was designed it to meet the following criteria:
 
-* An application that took basic information about all employees(Name, Role, Email, EID) and displayed it in an easy to read layout
-* An application that also got unique information from each employee depending on role(office number, GitHub username, school name) and displayed it in an easy to read layout
-* An application that will allow many files unique to each team to be written and saved
+* An application that allows users to enter notes with a title and note text and save them.
+* An application that will allow users to revisit note information with one click
+* An application that will allow for users to delete notes.
 * An application that is easily scaleable and expandable
-* A simple and clean generated page with a responsive design that accomodates screen sizes ranging from 320px to 1920px
+* A simple and clean interface with a responsive design that accomodates screen sizes ranging from 320px to 1920px
 
 ## Technology and Resources Used
 
 * HTML
+* CSS
 * Bootstrap
 * Javascript
 * Node.js
-* Inquirer
-* Chalk
-* Jest
-* [Miro](https://miro.com/about/): A visual colaboration and whiteboard platform for planning/wireframing. 
+* Express.js
+* [UUID](https://www.npmjs.com/package/uuid) 
 * [Coolors.co](https://coolors.co/): A color palatte generator.
 
-## A look at the question flow in the terminal:
+## A look at the application on a mobile device:
 
-![A look at the question flow in the terminal](/imgs/terminal-question-flow.PNG)
+![A look at the application on a mobile device](/imgs/just-notes.jpeg)
 
-## Generated HTML file viewed in browser at mobile size:
-![Generated HTML file viewed in browser at mobile size](/imgs/application-screenshot.PNG)
+
