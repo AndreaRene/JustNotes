@@ -22,23 +22,23 @@ app.get('/notes', (req, res) =>
 );
 
 // promise version of fs.readFile
-const readFromFile = util.promisify(fs.readFile);
+const readDB = util.promisify(fs.readFile);
 
 // function to write notes into db.json
-const writeToFile = (destination, content) =>
+const writeToDB = (destination, content) =>
     fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
         err ? console.error(err) : console.info(`\nData written to ${destination}`)
     );
 
-// function to read db file and add new objects
-const readAndAppend = (content, file) => {
+// function to read db file and add new notes
+const addNotes = (content, file) => {
     fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
             console.error(err);
         } else {
             const parsedData = JSON.parse(data);
             parsedData.push(content);
-            writeToFile(file, parsedData);
+            writeToDB(file, parsedData);
         }
     });
 };
@@ -53,7 +53,7 @@ const deleteNote = (file, id) => {
             noteArray.push(data);
             const parsedData = JSON.parse(noteArray);
             noteArray = parsedData.filter(note => note.id !== id);
-            writeToFile(file, noteArray);
+            writeToDB(file, noteArray);
         }
     });
 };
@@ -61,7 +61,7 @@ const deleteNote = (file, id) => {
 // GET route to retrieve notes
 app.get('/api/notes', (req, res) => {
     console.info(`${req.method} request received for notes`);
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+    readDB('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // POST route for to add new note
@@ -76,14 +76,14 @@ app.post('/api/notes', (req, res) => {
             text,
             id: uuid.v1(),
         };
-
-        readAndAppend(newNote, './db/db.json');
+        addNotes(newNote, './db/db.json');
         res.json(`Note added successfully`);
     } else {
         res.error('Error in adding note');
     }
 });
 
+// DELETE route to delete a specific note
 app.delete("/api/notes/:id", (req, res) => {
     console.info(`${req.method} request received to delete a note`);
     deleteNote('./db/db.json', req.params.id);
