@@ -51,8 +51,8 @@ const deleteNote = (file, id) => {
         } else {
             let noteArray = [];
             noteArray.push(data);
-            noteArray = noteArray.filter(note => note.id !== id);
-            // const parsedData = JSON.parse(noteArray);
+            const parsedData = JSON.parse(noteArray);
+            noteArray = parsedData.filter(note => note.id !== id);
             writeToFile(file, noteArray);
         }
     });
@@ -78,16 +78,16 @@ app.post('/api/notes', (req, res) => {
         };
 
         readAndAppend(newNote, './db/db.json');
-        res.json(`Note added successfully 🚀`);
+        res.json(`Note added successfully`);
     } else {
         res.error('Error in adding note');
     }
 });
 
-app.delete("/api/notes/:id", function (req, res) {
+app.delete("/api/notes/:id", (req, res) => {
     console.info(`${req.method} request received to delete a note`);
-    deleteNote('./db/db.json', req.param.id);
-    res.json(`Note deleted successfully`)
+    deleteNote('./db/db.json', req.params.id);
+    res.json(`Note deleted successfully`);
 });
 
 // GET route for homepage
